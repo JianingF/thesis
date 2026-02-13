@@ -1,0 +1,9 @@
+{"plugins": [],
+ "package": "OpenDPTranslation",
+ "options": {},
+ "name": "OpenDPTranslation.Transformations",
+ "isModule": false,
+ "importArts":
+ {"OpenDPTranslation.Domains":
+  ["/Users/amyfeng/Documents/coursework/thesis/.lake/build/lib/lean/OpenDPTranslation/Domains.olean"]},
+ "dynlibs": []}

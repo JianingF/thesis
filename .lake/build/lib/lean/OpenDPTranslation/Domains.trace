@@ -1,0 +1,28 @@
+{"synthetic": false,
+ "schemaVersion": "2025-09-10",
+ "outputs":
+ {"o": ["458524bfec415ee9.olean"],
+  "i": "9b59dc76e9b68b0c.ilean",
+  "c": "337ccec5e3c9f239.c"},
+ "log":
+ [{"message":
+   ".> LEAN_PATH=/Users/amyfeng/Documents/coursework/thesis/.lake/build/lib/lean /Users/amyfeng/.elan/toolchains/leanprover--lean4---v4.27.0/bin/lean /Users/amyfeng/Documents/coursework/thesis/OpenDPTranslation/Domains.lean -o /Users/amyfeng/Documents/coursework/thesis/.lake/build/lib/lean/OpenDPTranslation/Domains.olean -i /Users/amyfeng/Documents/coursework/thesis/.lake/build/lib/lean/OpenDPTranslation/Domains.ilean -c /Users/amyfeng/Documents/coursework/thesis/.lake/build/ir/OpenDPTranslation/Domains.c --setup /Users/amyfeng/Documents/coursework/thesis/.lake/build/ir/OpenDPTranslation/Domains.setup.json --json",
+   "level": "trace"}],
+ "inputs":
+ [["OpenDPTranslation.Domains:deps",
+   [["deps",
+     [["OpenDPTranslation/OpenDPTranslation:extraDep",
+       [["@OpenDPTranslation:extraDep", "00000000000006bb"]]],
+      ["imports", "00000000000006bb"]]],
+    ["libs",
+     [["import dynlibs", "00000000000006bb"],
+      ["package external libraries", "00000000000006bb"],
+      ["module dynlibs", "00000000000006bb"],
+      ["module plugins", "00000000000006bb"]]]]],
+  ["Lean 4.27.0, commit db93fe1608548721853390a10cd40580fe7d22ae",
+   "9a2be90fd35343e5"],
+  ["/Users/amyfeng/Documents/coursework/thesis/OpenDPTranslation/Domains.lean",
+   "238967e0490e38f5"],
+  ["options", "00000000000006bb"],
+  ["Module.leanArgs: #[]", "00000000000006bb"]],
+ "depHash": "3d88059b6405cf7e"}

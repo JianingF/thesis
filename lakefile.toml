@@ -1,0 +1,10 @@
+name = "OpenDPTranslation"
+version = "0.1.0"
+defaultTargets = ["opendptranslation"]
+
+[[lean_lib]]
+name = "OpenDPTranslation"
+
+[[lean_exe]]
+name = "opendptranslation"
+root = "Main"

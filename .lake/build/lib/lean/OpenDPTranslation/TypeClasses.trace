@@ -1,0 +1,28 @@
+{"synthetic": false,
+ "schemaVersion": "2025-09-10",
+ "outputs":
+ {"o": ["ba08ea395c1612fc.olean"],
+  "i": "7bf7ab491057aeac.ilean",
+  "c": "026c71147adbf5c9.c"},
+ "log":
+ [{"message":
+   ".> LEAN_PATH=/Users/amyfeng/Documents/coursework/thesis/.lake/build/lib/lean /Users/amyfeng/.elan/toolchains/leanprover--lean4---v4.27.0/bin/lean /Users/amyfeng/Documents/coursework/thesis/OpenDPTranslation/TypeClasses.lean -o /Users/amyfeng/Documents/coursework/thesis/.lake/build/lib/lean/OpenDPTranslation/TypeClasses.olean -i /Users/amyfeng/Documents/coursework/thesis/.lake/build/lib/lean/OpenDPTranslation/TypeClasses.ilean -c /Users/amyfeng/Documents/coursework/thesis/.lake/build/ir/OpenDPTranslation/TypeClasses.c --setup /Users/amyfeng/Documents/coursework/thesis/.lake/build/ir/OpenDPTranslation/TypeClasses.setup.json --json",
+   "level": "trace"}],
+ "inputs":
+ [["OpenDPTranslation.TypeClasses:deps",
+   [["deps",
+     [["OpenDPTranslation/OpenDPTranslation:extraDep",
+       [["@OpenDPTranslation:extraDep", "00000000000006bb"]]],
+      ["imports", "00000000000006bb"]]],
+    ["libs",
+     [["import dynlibs", "00000000000006bb"],
+      ["package external libraries", "00000000000006bb"],
+      ["module dynlibs", "00000000000006bb"],
+      ["module plugins", "00000000000006bb"]]]]],
+  ["Lean 4.27.0, commit db93fe1608548721853390a10cd40580fe7d22ae",
+   "9a2be90fd35343e5"],
+  ["/Users/amyfeng/Documents/coursework/thesis/OpenDPTranslation/TypeClasses.lean",
+   "f034c9b362d81830"],
+  ["options", "00000000000006bb"],
+  ["Module.leanArgs: #[]", "00000000000006bb"]],
+ "depHash": "30a8719ac177abf8"}

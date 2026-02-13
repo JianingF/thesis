@@ -1,0 +1,13 @@
+{"plugins": [],
+ "package": "OpenDPTranslation",
+ "options": {},
+ "name": "OpenDPTranslation.Axioms",
+ "isModule": false,
+ "importArts":
+ {"OpenDPTranslation.TypeClasses":
+  ["/Users/amyfeng/Documents/coursework/thesis/.lake/build/lib/lean/OpenDPTranslation/TypeClasses.olean"],
+  "OpenDPTranslation.Transformations":
+  ["/Users/amyfeng/Documents/coursework/thesis/.lake/build/lib/lean/OpenDPTranslation/Transformations.olean"],
+  "OpenDPTranslation.Domains":
+  ["/Users/amyfeng/Documents/coursework/thesis/.lake/build/lib/lean/OpenDPTranslation/Domains.olean"]},
+ "dynlibs": []}
