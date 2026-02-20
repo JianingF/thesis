@@ -1,12 +1,12 @@
 {"synthetic": false,
  "schemaVersion": "2025-09-10",
  "outputs":
- {"o": ["458524bfec415ee9.olean"],
-  "i": "9b59dc76e9b68b0c.ilean",
-  "c": "337ccec5e3c9f239.c"},
+ {"o": ["9b4f3fffae00e361.olean"],
+  "i": "867895ee0b57b373.ilean",
+  "c": "b9629c4fc9c71aa5.c"},
  "log":
  [{"message":
-   ".> LEAN_PATH=/Users/amyfeng/Documents/coursework/thesis/.lake/build/lib/lean /Users/amyfeng/.elan/toolchains/leanprover--lean4---v4.27.0/bin/lean /Users/amyfeng/Documents/coursework/thesis/OpenDPTranslation/Domains.lean -o /Users/amyfeng/Documents/coursework/thesis/.lake/build/lib/lean/OpenDPTranslation/Domains.olean -i /Users/amyfeng/Documents/coursework/thesis/.lake/build/lib/lean/OpenDPTranslation/Domains.ilean -c /Users/amyfeng/Documents/coursework/thesis/.lake/build/ir/OpenDPTranslation/Domains.c --setup /Users/amyfeng/Documents/coursework/thesis/.lake/build/ir/OpenDPTranslation/Domains.setup.json --json",
+   ".> LEAN_PATH=/Users/amyfeng/Documents/coursework/thesis/.lake/packages/Cli/.lake/build/lib/lean:/Users/amyfeng/Documents/coursework/thesis/.lake/packages/batteries/.lake/build/lib/lean:/Users/amyfeng/Documents/coursework/thesis/.lake/packages/Qq/.lake/build/lib/lean:/Users/amyfeng/Documents/coursework/thesis/.lake/packages/aesop/.lake/build/lib/lean:/Users/amyfeng/Documents/coursework/thesis/.lake/packages/proofwidgets/.lake/build/lib/lean:/Users/amyfeng/Documents/coursework/thesis/.lake/packages/importGraph/.lake/build/lib/lean:/Users/amyfeng/Documents/coursework/thesis/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/Users/amyfeng/Documents/coursework/thesis/.lake/packages/plausible/.lake/build/lib/lean:/Users/amyfeng/Documents/coursework/thesis/.lake/packages/mathlib/.lake/build/lib/lean:/Users/amyfeng/Documents/coursework/thesis/.lake/build/lib/lean /Users/amyfeng/.elan/toolchains/leanprover--lean4---v4.29.0-rc1/bin/lean /Users/amyfeng/Documents/coursework/thesis/OpenDPTranslation/Domains.lean -o /Users/amyfeng/Documents/coursework/thesis/.lake/build/lib/lean/OpenDPTranslation/Domains.olean -i /Users/amyfeng/Documents/coursework/thesis/.lake/build/lib/lean/OpenDPTranslation/Domains.ilean -c /Users/amyfeng/Documents/coursework/thesis/.lake/build/ir/OpenDPTranslation/Domains.c --setup /Users/amyfeng/Documents/coursework/thesis/.lake/build/ir/OpenDPTranslation/Domains.setup.json --json",
    "level": "trace"}],
  "inputs":
  [["OpenDPTranslation.Domains:deps",
@@ -19,10 +19,13 @@
       ["package external libraries", "00000000000006bb"],
       ["module dynlibs", "00000000000006bb"],
       ["module plugins", "00000000000006bb"]]]]],
-  ["Lean 4.27.0, commit db93fe1608548721853390a10cd40580fe7d22ae",
-   "9a2be90fd35343e5"],
+  ["Lean 4.29.0, commit 985f350dcd18fc7814dfa677cac09933f44f3215",
+   "25953b0996e8f9b7"],
   ["/Users/amyfeng/Documents/coursework/thesis/OpenDPTranslation/Domains.lean",
    "238967e0490e38f5"],
   ["options", "00000000000006bb"],
+  ["isModule: false", "feefd2a0d3a1847e"],
+  ["Module.name: OpenDPTranslation.Domains", "743301cfb40aef95"],
+  ["Package.id?: (some OpenDPTranslation)", "0b6d932dbc601f93"],
   ["Module.leanArgs: #[]", "00000000000006bb"]],
- "depHash": "3d88059b6405cf7e"}
+ "depHash": "b60719ee5590e206"}

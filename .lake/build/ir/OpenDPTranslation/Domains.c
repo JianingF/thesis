@@ -13,30 +13,15 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-LEAN_EXPORT lean_object* lp_OpenDPTranslation_Bounds_new__closed(lean_object*, lean_object*, lean_object*, lean_object*);
-static lean_object* lp_OpenDPTranslation_Bounds_new__closed___redArg___closed__1;
-static lean_object* lp_OpenDPTranslation_AtomDomain_default___closed__0;
-LEAN_EXPORT lean_object* lp_OpenDPTranslation_AtomDomain_default(lean_object*, lean_object*);
-static lean_object* lp_OpenDPTranslation_Bounds_new__closed___redArg___closed__0;
+static const lean_string_object lp_OpenDPTranslation_Bounds_new__closed___redArg___closed__0_value = {.m_header = {.m_rc = 0, .m_cs_sz = 0, .m_other = 0, .m_tag = 249}, .m_size = 40, .m_capacity = 40, .m_length = 37, .m_data = "Invalid bounds: lower must be ≤ upper"};
+static const lean_object* lp_OpenDPTranslation_Bounds_new__closed___redArg___closed__0 = (const lean_object*)&lp_OpenDPTranslation_Bounds_new__closed___redArg___closed__0_value;
+static const lean_ctor_object lp_OpenDPTranslation_Bounds_new__closed___redArg___closed__1_value = {.m_header = {.m_rc = 0, .m_cs_sz = sizeof(lean_ctor_object) + sizeof(void*)*1 + 0, .m_other = 1, .m_tag = 0}, .m_objs = {((lean_object*)&lp_OpenDPTranslation_Bounds_new__closed___redArg___closed__0_value)}};
+static const lean_object* lp_OpenDPTranslation_Bounds_new__closed___redArg___closed__1 = (const lean_object*)&lp_OpenDPTranslation_Bounds_new__closed___redArg___closed__1_value;
 LEAN_EXPORT lean_object* lp_OpenDPTranslation_Bounds_new__closed___redArg(lean_object*, lean_object*);
-static lean_object* _init_lp_OpenDPTranslation_Bounds_new__closed___redArg___closed__0() {
-_start:
-{
-lean_object* x_1; 
-x_1 = lean_mk_string_unchecked("Invalid bounds: lower must be ≤ upper", 39, 37);
-return x_1;
-}
-}
-static lean_object* _init_lp_OpenDPTranslation_Bounds_new__closed___redArg___closed__1() {
-_start:
-{
-lean_object* x_1; lean_object* x_2; 
-x_1 = lp_OpenDPTranslation_Bounds_new__closed___redArg___closed__0;
-x_2 = lean_alloc_ctor(0, 1, 0);
-lean_ctor_set(x_2, 0, x_1);
-return x_2;
-}
-}
+LEAN_EXPORT lean_object* lp_OpenDPTranslation_Bounds_new__closed(lean_object*, lean_object*, lean_object*, lean_object*);
+static const lean_ctor_object lp_OpenDPTranslation_AtomDomain_default___closed__0_value = {.m_header = {.m_rc = 0, .m_cs_sz = sizeof(lean_ctor_object) + sizeof(void*)*1 + 8, .m_other = 1, .m_tag = 0}, .m_objs = {((lean_object*)(((size_t)(0) << 1) | 1)),LEAN_SCALAR_PTR_LITERAL(1, 0, 0, 0, 0, 0, 0, 0)}};
+static const lean_object* lp_OpenDPTranslation_AtomDomain_default___closed__0 = (const lean_object*)&lp_OpenDPTranslation_AtomDomain_default___closed__0_value;
+LEAN_EXPORT lean_object* lp_OpenDPTranslation_AtomDomain_default(lean_object*, lean_object*);
 LEAN_EXPORT lean_object* lp_OpenDPTranslation_Bounds_new__closed___redArg(lean_object* x_1, lean_object* x_2) {
 _start:
 {
@@ -57,7 +42,7 @@ lean_object* x_8;
 lean_free_object(x_2);
 lean_dec(x_5);
 lean_dec(x_4);
-x_8 = lp_OpenDPTranslation_Bounds_new__closed___redArg___closed__1;
+x_8 = ((lean_object*)(lp_OpenDPTranslation_Bounds_new__closed___redArg___closed__1));
 return x_8;
 }
 else
@@ -85,7 +70,7 @@ if (x_13 == 0)
 lean_object* x_14; 
 lean_dec(x_11);
 lean_dec(x_10);
-x_14 = lp_OpenDPTranslation_Bounds_new__closed___redArg___closed__1;
+x_14 = ((lean_object*)(lp_OpenDPTranslation_Bounds_new__closed___redArg___closed__1));
 return x_14;
 }
 else
@@ -109,23 +94,11 @@ x_5 = lp_OpenDPTranslation_Bounds_new__closed___redArg(x_3, x_4);
 return x_5;
 }
 }
-static lean_object* _init_lp_OpenDPTranslation_AtomDomain_default___closed__0() {
-_start:
-{
-uint8_t x_1; lean_object* x_2; lean_object* x_3; 
-x_1 = 1;
-x_2 = lean_box(0);
-x_3 = lean_alloc_ctor(0, 1, 1);
-lean_ctor_set(x_3, 0, x_2);
-lean_ctor_set_uint8(x_3, sizeof(void*)*1, x_1);
-return x_3;
-}
-}
 LEAN_EXPORT lean_object* lp_OpenDPTranslation_AtomDomain_default(lean_object* x_1, lean_object* x_2) {
 _start:
 {
 lean_object* x_3; 
-x_3 = lp_OpenDPTranslation_AtomDomain_default___closed__0;
+x_3 = ((lean_object*)(lp_OpenDPTranslation_AtomDomain_default___closed__0));
 return x_3;
 }
 }
@@ -138,12 +111,6 @@ _G_initialized = true;
 res = initialize_Init(builtin);
 if (lean_io_result_is_error(res)) return res;
 lean_dec_ref(res);
-lp_OpenDPTranslation_Bounds_new__closed___redArg___closed__0 = _init_lp_OpenDPTranslation_Bounds_new__closed___redArg___closed__0();
-lean_mark_persistent(lp_OpenDPTranslation_Bounds_new__closed___redArg___closed__0);
-lp_OpenDPTranslation_Bounds_new__closed___redArg___closed__1 = _init_lp_OpenDPTranslation_Bounds_new__closed___redArg___closed__1();
-lean_mark_persistent(lp_OpenDPTranslation_Bounds_new__closed___redArg___closed__1);
-lp_OpenDPTranslation_AtomDomain_default___closed__0 = _init_lp_OpenDPTranslation_AtomDomain_default___closed__0();
-lean_mark_persistent(lp_OpenDPTranslation_AtomDomain_default___closed__0);
 return lean_io_result_mk_ok(lean_box(0));
 }
 #ifdef __cplusplus

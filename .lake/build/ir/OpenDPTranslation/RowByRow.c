@@ -13,11 +13,11 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-LEAN_EXPORT lean_object* lp_OpenDPTranslation_make__row__by__row___boxed(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
-LEAN_EXPORT lean_object* lp_OpenDPTranslation_make__row__by__row___redArg(lean_object*, lean_object*, lean_object*);
 LEAN_EXPORT lean_object* lp_OpenDPTranslation_make__row__by__row___redArg___lam__0(lean_object*, lean_object*);
 lean_object* lp_OpenDPTranslation_make__row__by__row__fallible___redArg(lean_object*, lean_object*, lean_object*);
+LEAN_EXPORT lean_object* lp_OpenDPTranslation_make__row__by__row___redArg(lean_object*, lean_object*, lean_object*);
 LEAN_EXPORT lean_object* lp_OpenDPTranslation_make__row__by__row(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
+LEAN_EXPORT lean_object* lp_OpenDPTranslation_make__row__by__row___boxed(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
 LEAN_EXPORT lean_object* lp_OpenDPTranslation_make__row__by__row___redArg___lam__0(lean_object* x_1, lean_object* x_2) {
 _start:
 {

@@ -56,7 +56,6 @@ theorem make_vec_correct
 theorem make_vec_stable
     {T Q : Type} [LE T] [Number T] [Number Q]
     [HasScalarDistance (AbsoluteDistance Q) T]
-    [HasDistance (LpDistance T Q) T]
     (input_domain : AtomDomain T)
     (input_metric : AbsoluteDistance Q) :
     ∀ (x x' : T) (d_in d_out : Nat),
@@ -95,7 +94,6 @@ theorem make_vec_stable
 theorem make_vec_sound
     {T Q : Type} [LE T] [Number T] [Number Q]
     [HasScalarDistance (AbsoluteDistance Q) T]
-    [HasDistance (LpDistance T Q) T]
     (input_domain : AtomDomain T)
     (input_metric : AbsoluteDistance Q) :
     let t := make_vec input_domain input_metric

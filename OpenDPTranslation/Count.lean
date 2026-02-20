@@ -59,68 +59,62 @@ theorem make_count_correct
   exact make_count_output_in_domain input_domain input_metric input h_input_valid
 
 theorem make_count_stable
-    {TIA TO : Type} [LE TIA] [LE TO]
-    [Primitive TIA] [Number TO] [InfCast TO] [InfMul TO]
+    {TIA : Type} [LE TIA]
+    [Primitive TIA]
     [HasDistance SymmetricDistance TIA]
-    [HasScalarDistance (AbsoluteDistance TO) TO]
     (input_domain : VectorDomain (AtomDomain TIA))
     (input_metric : SymmetricDistance) :
     ∀ (x x' : List TIA) (d_in : Nat) (d_out : Nat),
       (∀ v ∈ x, input_domain.element_domain.contains v) →
       (∀ v ∈ x', input_domain.element_domain.contains v) →
+      (∃ n : Int, Number.exact_int_cast x.length = Except.ok n) →
+      (∃ n : Int, Number.exact_int_cast x'.length = Except.ok n) →
       HasDistance.distance input_metric x x' ≤ d_in →
       d_in ≤ d_out →
-      let t := make_count input_domain input_metric
-      ∃ (output_x output_x' : TO),
+      let t := make_count (TO := Int) input_domain input_metric
+      ∃ (output_x output_x' : Int),
         t.apply x = Except.ok output_x ∧
         t.apply x' = Except.ok output_x' ∧
-        HasScalarDistance.scalar_distance (AbsoluteDistance.mk (T := TO)) output_x output_x' ≤ d_out := by
-  intro x x' d_in d_out h_x_valid h_x'_valid h_close h_stability
+        HasScalarDistance.scalar_distance (AbsoluteDistance.mk (T := Int)) output_x output_x' ≤ d_out := by
+  intro x x' d_in d_out h_x_valid h_x'_valid h_x_no_overflow h_x'_no_overflow h_close h_stability
   intro t
-  have h_x_result := make_count_output_in_domain (TO := TO) input_domain input_metric x h_x_valid
-  have h_x'_result := make_count_output_in_domain (TO := TO) input_domain input_metric x' h_x'_valid
+  have h_x_result := make_count_output_in_domain (TO := Int) input_domain input_metric x h_x_valid
+  have h_x'_result := make_count_output_in_domain (TO := Int) input_domain input_metric x' h_x'_valid
+
   obtain ⟨output_x, h_x_apply, h_x_in_domain⟩ := h_x_result
   obtain ⟨output_x', h_x'_apply, h_x'_in_domain⟩ := h_x'_result
   exists output_x, output_x'
-  constructor
-  · exact h_x_apply
-  constructor
-  · exact h_x'_apply
-  · have h_distance_bound :
-      HasScalarDistance.scalar_distance (AbsoluteDistance.mk (T := TO)) output_x output_x' ≤ d_in := by
-      unfold make_count at h_x_apply h_x'_apply
-      simp only at h_x_apply h_x'_apply
-      have h_output_x_def : output_x = match Number.exact_int_cast (T := TO) x.length with
-                                        | Except.ok n => n
-                                        | Except.error _ => Number.max_consecutive := by
-        cases h_cast : Number.exact_int_cast (T := TO) x.length with
-        | ok n => simp only [h_cast] at h_x_apply; cases h_x_apply; rfl
-        | error e => simp only [h_cast] at h_x_apply; cases h_x_apply; rfl
-      have h_output_x'_def : output_x' = match Number.exact_int_cast (T := TO) x'.length with
-                                          | Except.ok n => n
-                                          | Except.error _ => Number.max_consecutive := by
-        cases h_cast : Number.exact_int_cast (T := TO) x'.length with
-        | ok n => simp only [h_cast] at h_x'_apply; cases h_x'_apply; rfl
-        | error e => simp only [h_cast] at h_x'_apply; cases h_x'_apply; rfl
-      have h_saturation := count_with_saturation_stable x.length x'.length output_x output_x'
-                                                        h_output_x_def h_output_x'_def
-      have h_length_bound := length_bounded_by_symmetric_distance input_metric x x'
-      calc HasScalarDistance.scalar_distance (AbsoluteDistance.mk (T := TO)) output_x output_x'
-          ≤ Int.natAbs (x.length - x'.length) := h_saturation
-        _ ≤ HasDistance.distance input_metric x x' := h_length_bound
-        _ ≤ d_in := h_close
-    calc HasScalarDistance.scalar_distance (AbsoluteDistance.mk (T := TO)) output_x output_x'
-        ≤ d_in := h_distance_bound
-      _ ≤ d_out := h_stability
+  refine ⟨h_x_apply, h_x'_apply, ?_⟩
+  have h_output_x_def : Number.exact_int_cast (T := Int) x.length = Except.ok output_x := by
+    unfold make_count at h_x_apply
+    simp only at h_x_apply
+    split at h_x_apply
+    · cases h_x_apply; assumption
+    · obtain ⟨n, hn⟩ := h_x_no_overflow
+      simp_all
+  have h_output_x'_def : Number.exact_int_cast (T := Int) x'.length = Except.ok output_x' := by
+    unfold make_count at h_x'_apply
+    simp only at h_x'_apply
+    split at h_x'_apply
+    · cases h_x'_apply; assumption
+    · obtain ⟨n, hn⟩ := h_x'_no_overflow
+      simp_all
+  have h_saturation := count_with_saturation_stable x.length x'.length output_x output_x'
+                                                    h_output_x_def h_output_x'_def
+  have h_length_bound := length_bounded_by_symmetric_distance input_metric x x'
+  calc HasScalarDistance.scalar_distance (AbsoluteDistance.mk (T := Int)) output_x output_x'
+      ≤ Int.natAbs (x.length - x'.length) := h_saturation
+    _ ≤ HasDistance.distance input_metric x x' := h_length_bound
+    _ ≤ d_in := h_close
+    _ ≤ d_out := h_stability
 
 theorem make_count_sound
-    {TIA TO : Type} [LE TIA] [LE TO]
-    [Primitive TIA] [Number TO] [InfCast TO] [InfMul TO]
+    {TIA : Type} [LE TIA]
+    [Primitive TIA]
     [HasDistance SymmetricDistance TIA]
-    [HasScalarDistance (AbsoluteDistance TO) TO]
     (input_domain : VectorDomain (AtomDomain TIA))
     (input_metric : SymmetricDistance) :
-    let t := make_count (TO := TO) input_domain input_metric
+    let t := make_count (TO := Int) input_domain input_metric
     (∀ (input : List TIA),
       (∀ v ∈ input, input_domain.element_domain.contains v) →
       ∃ output, t.apply input = Except.ok output ∧
@@ -128,12 +122,14 @@ theorem make_count_sound
     (∀ (x x' : List TIA) (d_in d_out : Nat),
       (∀ v ∈ x, input_domain.element_domain.contains v) →
       (∀ v ∈ x', input_domain.element_domain.contains v) →
+      (∃ n : Int, Number.exact_int_cast x.length = Except.ok n) →
+      (∃ n : Int, Number.exact_int_cast x'.length = Except.ok n) →
       HasDistance.distance input_metric x x' ≤ d_in →
       d_in ≤ d_out →
-      ∃ (output_x output_x' : TO),
+      ∃ (output_x output_x' : Int),
         t.apply x = Except.ok output_x ∧
         t.apply x' = Except.ok output_x' ∧
-        HasScalarDistance.scalar_distance (AbsoluteDistance.mk (T := TO)) output_x output_x' ≤ d_out) := by
+        HasScalarDistance.scalar_distance (AbsoluteDistance.mk (T := Int)) output_x output_x' ≤ d_out) := by
   intro t
   constructor
   · exact fun input h_valid =>

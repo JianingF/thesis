@@ -14,8 +14,8 @@
 extern "C" {
 #endif
 LEAN_EXPORT lean_object* lp_OpenDPTranslation_SymmetricDistance_toCtorIdx(lean_object*);
-LEAN_EXPORT lean_object* lp_OpenDPTranslation_stability__map__identity___boxed(lean_object*);
 LEAN_EXPORT lean_object* lp_OpenDPTranslation_stability__map__identity(lean_object*);
+LEAN_EXPORT lean_object* lp_OpenDPTranslation_stability__map__identity___boxed(lean_object*);
 LEAN_EXPORT lean_object* lp_OpenDPTranslation_SymmetricDistance_toCtorIdx(lean_object* x_1) {
 _start:
 {
