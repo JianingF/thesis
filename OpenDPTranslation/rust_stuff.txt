@@ -1,0 +1,80 @@
+pub trait Primitive:
+    'static
+    + Clone
+    + Debug
+    + Display
+    + CheckNull
+    + PartialEq
+    + Default
+    + CheckAtom
+    + Send
+    + Sync { }
+
+pub trait Number:
+    Primitive
+    + Copy
+    + NumCast
+    + AlertingAbs
+    + NumOps
+    + SaturatingAdd
+    + SaturatingMul
+    + InfAdd
+    + InfSub
+    + InfMul
+    + InfDiv
+    + ProductOrd
+    + Zero
+    + One
+    + PartialEq
+    + AddAssign
+    + SubAssign
+    + MulAssign
+    + DivAssign
+    + FiniteBounds
+    + ExactIntCast<usize>
+    + ExactIntCast<i32>
+    + InfCast<IntDistance>
+    + InfCast<usize>
+    + Sum<Self>
+    + for<'a> Sum<&'a Self>
+    + DistanceConstant<Self> { }
+
+pub trait Domain:
+    Clone
+    + PartialEq
+    + Debug {
+    type Carrier;
+
+    // Required method
+    fn member(&self, val: &Self::Carrier) -> Fallible<bool>;
+}
+
+pub struct VectorDomain<D: Domain> {
+    pub element_domain: D,
+    pub size: Option<usize>,
+}
+
+pub struct AtomDomain<T: CheckAtom> {
+    pub bounds: Option<Bounds<T>>,
+    nan: bool,
+}
+
+pub trait DatasetDomain: Domain {
+    type ElementDomain: Domain;
+}
+
+pub struct SymmetricDistance;
+
+pub trait InfCast<TI>: Sized {
+    // Required methods
+    fn inf_cast(v: TI) -> Fallible<Self>;
+    fn neg_inf_cast(v: TI) -> Fallible<Self>;
+}
+
+pub trait InfMul: Sized + AlertingMul {
+    // Required methods
+    fn inf_mul(&self, v: &Self) -> Fallible<Self>;
+    fn neg_inf_mul(&self, v: &Self) -> Fallible<Self>;
+}
+
+pub struct StabilityMap<MI: Metric, MO: Metric>(pub Arc<dyn Fn(&MI::Distance) -> Fallible<MO::Distance> + Send + Sync>);
