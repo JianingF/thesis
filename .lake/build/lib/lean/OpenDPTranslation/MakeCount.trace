@@ -1,16 +1,13 @@
 {"synthetic": false,
  "schemaVersion": "2025-09-10",
  "outputs":
- {"o": ["6846af33cb5f58c8.olean"],
-  "i": "6b47879a609d88e3.ilean",
-  "c": "e37ee89f7d34da2f.c"},
+ {"o": ["f20dbe36327f85d7.olean"],
+  "i": "00595005627b5503.ilean",
+  "c": "abf2849111268a50.c"},
  "log":
  [{"message":
    ".> LEAN_PATH=/Users/amyfeng/Documents/coursework/thesis/.lake/packages/Cli/.lake/build/lib/lean:/Users/amyfeng/Documents/coursework/thesis/.lake/packages/batteries/.lake/build/lib/lean:/Users/amyfeng/Documents/coursework/thesis/.lake/packages/Qq/.lake/build/lib/lean:/Users/amyfeng/Documents/coursework/thesis/.lake/packages/aesop/.lake/build/lib/lean:/Users/amyfeng/Documents/coursework/thesis/.lake/packages/proofwidgets/.lake/build/lib/lean:/Users/amyfeng/Documents/coursework/thesis/.lake/packages/importGraph/.lake/build/lib/lean:/Users/amyfeng/Documents/coursework/thesis/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/Users/amyfeng/Documents/coursework/thesis/.lake/packages/plausible/.lake/build/lib/lean:/Users/amyfeng/Documents/coursework/thesis/.lake/packages/mathlib/.lake/build/lib/lean:/Users/amyfeng/Documents/coursework/thesis/.lake/build/lib/lean /Users/amyfeng/.elan/toolchains/leanprover--lean4---v4.29.0-rc1/bin/lean /Users/amyfeng/Documents/coursework/thesis/OpenDPTranslation/MakeCount.lean -o /Users/amyfeng/Documents/coursework/thesis/.lake/build/lib/lean/OpenDPTranslation/MakeCount.olean -i /Users/amyfeng/Documents/coursework/thesis/.lake/build/lib/lean/OpenDPTranslation/MakeCount.ilean -c /Users/amyfeng/Documents/coursework/thesis/.lake/build/ir/OpenDPTranslation/MakeCount.c --setup /Users/amyfeng/Documents/coursework/thesis/.lake/build/ir/OpenDPTranslation/MakeCount.setup.json --json",
-   "level": "trace"},
-  {"message":
-   "OpenDPTranslation/MakeCount.lean:336:0: automatically included section variable(s) unused in theorem `make_count_is_valid`:\n  [NeverNull TIA]\nconsider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:\n  omit [NeverNull TIA] in theorem ...\n\nNote: This linter can be disabled with `set_option linter.unusedSectionVars false`",
-   "level": "warning"}],
+   "level": "trace"}],
  "inputs":
  [["OpenDPTranslation.MakeCount:deps",
    [["deps",
@@ -19,11 +16,11 @@
       ["imports",
        [["OpenDPTranslation.OpenDPCore transitive imports (legacy)",
          "ade5af2d77a2f8c7"],
-        ["OpenDPTranslation.OpenDPCore:importAllArts", "64652e34205daab4"],
+        ["OpenDPTranslation.OpenDPCore:importAllArts", "2cd346be7f43a92c"],
         ["OpenDPTranslation.MakeRowByRowFallible transitive imports (legacy)",
-         "ed6a16155d598025"],
+         "45ad389b83a55ac7"],
         ["OpenDPTranslation.MakeRowByRowFallible:importAllArts",
-         "7002be92d47da071"]]]]],
+         "b14de3b12ae44a83"]]]]],
     ["libs",
      [["import dynlibs", "00000000000006bb"],
       ["package external libraries", "00000000000006bb"],
@@ -32,10 +29,10 @@
   ["Lean 4.29.0, commit 985f350dcd18fc7814dfa677cac09933f44f3215",
    "25953b0996e8f9b7"],
   ["/Users/amyfeng/Documents/coursework/thesis/OpenDPTranslation/MakeCount.lean",
-   "21e8af741eddb162"],
+   "9e113f24eff9a2a3"],
   ["options", "00000000000006bb"],
   ["isModule: false", "feefd2a0d3a1847e"],
   ["Module.name: OpenDPTranslation.MakeCount", "3fff49674465d61d"],
   ["Package.id?: (some OpenDPTranslation)", "0b6d932dbc601f93"],
   ["Module.leanArgs: #[]", "00000000000006bb"]],
- "depHash": "888b7676c845ec13"}
+ "depHash": "81dae6477d4a327a"}

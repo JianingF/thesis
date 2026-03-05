@@ -11,14 +11,12 @@
   Like `make_count`, this uses heterogeneous metrics (AbsoluteDistance → LpDistance),
   so it uses the `HTransformation` structure.
 
-  FAITHFULNESS NOTES (vs. prior version):
-  - The stability map is now fallible, matching the Rust `StabilityMap`.
-  - InfCast is fallible, so the stability map can fail.
-  - The explicit `inf_mul` by one step is included.
+  CHANGES IN THIS VERSION:
+  - `h_one_mul_nondec` hypothesis eliminated in favor of `OneInfMulNonDec` typeclass.
 -/
 
 import OpenDPTranslation.OpenDPCore
-import OpenDPTranslation.MakeRowByRowFallible  -- for InfCast, InfMul, HasOne
+import OpenDPTranslation.MakeRowByRowFallible  -- for InfCast, InfMul, HasOne, OneInfMulNonDec
 import OpenDPTranslation.MakeCount  -- for HTransformation, AbsoluteDistance
 
 -- ============================================================================
@@ -63,6 +61,7 @@ variable {DI DO : Type*} {T Q : Type*}
   [infCastTQ : InfCast T Q]
   [infMulQ : InfMul Q]
   [hasOneQ : HasOne Q]
+  [oneInfMulQ : OneInfMulNonDec Q]
 
 /--
   Construct the transformation corresponding to `make_vec`.
@@ -108,7 +107,10 @@ def make_vec
       = d_Lp([x], [x'])
       ≤ Q.inf_cast(d_Abs(x, x'))       by h_wrap_stable + InfCast
       ≤ Q.inf_cast(d_in)               by InfCast.monotone
-      ≤ Q.one().inf_mul(Q.inf_cast(d_in)) = d_out  by InfMul non-decreasing
+      ≤ Q.one().inf_mul(Q.inf_cast(d_in)) = d_out  by OneInfMulNonDec
+
+  The `h_one_mul_nondec` hypothesis from the previous version is now provided
+  by the `OneInfMulNonDec` typeclass instance.
 -/
 theorem make_vec_is_valid
     (input_domain : DI)
@@ -127,9 +129,6 @@ theorem make_vec_is_valid
       (u v : Domain.Carrier DI) (casted : Q),
       infCastTQ.inf_cast (MetricOn.dist m_in u v) = some casted →
       MetricOn.dist m_out (wrap (to_T u)) (wrap (to_T v)) ≤ casted)
-    -- InfMul by one is non-decreasing
-    (h_one_mul_nondec : ∀ (x y : Q),
-      infMulQ.inf_mul hasOneQ.one x = some y → x ≤ y)
     : (make_vec input_domain output_domain input_metric output_metric
         to_T wrap).IsValid :=
   { -- Part 1: appropriate output domain
@@ -160,8 +159,8 @@ theorem make_vec_is_valid
         have h_cast_mono := InfCast.monotone (α := T) (β := Q)
           h_close h_cast_dist h_cast_din
 
-        -- InfMul non-decreasing: casted_din ≤ d_out
-        have h_mul_nondec := h_one_mul_nondec casted_din d_out h_stab
+        -- OneInfMulNonDec: casted_din ≤ d_out
+        have h_mul_nondec := OneInfMulNonDec.one_inf_mul_nondec casted_din d_out h_stab
 
         exact le_trans (le_trans h_ws h_cast_mono) h_mul_nondec
   }

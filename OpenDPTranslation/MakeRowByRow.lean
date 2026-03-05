@@ -25,6 +25,8 @@ variable {DI DO M : Type*}
   [InfCast (Metric.Distance M) (Metric.Distance M)]
   [InfMul (Metric.Distance M)]
   [HasOne (Metric.Distance M)]
+  [InfCastSelfNonDec (Metric.Distance M)]
+  [OneInfMulNonDec (Metric.Distance M)]
 
 /--
   Construct the transformation corresponding to `make_row_by_row`.
@@ -61,15 +63,10 @@ theorem make_row_by_row_is_valid
     -- Precondition: row_function maps valid rows to output_row_domain
     (h_row_fn : ∀ r, Domain.mem (DatasetDomain.elementDomain input_domain) r →
       Domain.mem output_row_domain (row_function r))
-    -- Precondition: stability map is non-decreasing
-    (h_one_mul : ∀ (d_in d_out : Metric.Distance M),
-      new_stability_map_from_constant (HasOne.one) d_in = some d_out →
-      d_in ≤ d_out)
     : (make_row_by_row input_domain input_metric output_row_domain row_function).IsValid := by
   unfold make_row_by_row
   apply make_row_by_row_fallible_is_valid
   · intro r h_r_mem
     exact ⟨row_function r, rfl, h_row_fn r h_r_mem⟩
-  · exact h_one_mul
 
 end MakeRowByRow

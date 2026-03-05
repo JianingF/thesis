@@ -58,6 +58,8 @@ variable {DI DO M α : Type*}
   [InfCast (Metric.Distance M) (Metric.Distance M)]
   [InfMul (Metric.Distance M)]
   [HasOne (Metric.Distance M)]
+  [InfCastSelfNonDec (Metric.Distance M)]
+  [OneInfMulNonDec (Metric.Distance M)]
   [ProductOrd α]
 
 /--
@@ -103,14 +105,11 @@ theorem make_clamp_is_valid
     (h_clamp : ∀ r, Domain.mem (DatasetDomain.elementDomain input_domain) r →
       ∃ r', clamp_row_function bounds to_α from_α r = some r' ∧
         Domain.mem output_row_domain r')
-    (h_one_mul : ∀ (d_in d_out : Metric.Distance M),
-      new_stability_map_from_constant (HasOne.one) d_in = some d_out →
-      d_in ≤ d_out)
     : (make_clamp input_domain input_metric output_row_domain bounds to_α from_α).IsValid := by
   unfold make_clamp
   exact make_row_by_row_fallible_is_valid
     input_domain input_metric output_row_domain
     (clamp_row_function bounds to_α from_α)
-    h_clamp h_one_mul
+    h_clamp
 
 end MakeClamp

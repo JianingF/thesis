@@ -10,6 +10,9 @@
     In Rust, this computes `TO.one().inf_mul(&TO.inf_cast(d_in)?)` which can
     fail if either `inf_cast` or `inf_mul` fails.
   - `InfCast` and `InfMul` are fallible, matching their Rust signatures.
+  - The `OneInfMulNonDec` and `InfCastSelfNonDec` typeclasses capture the
+    universal property that `new_stability_map_from_constant(1)` is non-decreasing,
+    eliminating the repeated `h_one_mul` hypothesis from all downstream theorems.
 -/
 
 import OpenDPTranslation.OpenDPCore
@@ -46,6 +49,20 @@ theorem InfCast.exists_of_ne_none {α β : Type*} [Preorder α] [Preorder β]
   | some v => exact ⟨v, rfl⟩
 
 /--
+  When `InfCast` casts from a type to itself, the result is at least as large
+  as the input (since `inf_cast` rounds toward +∞).
+
+  For self-casts in OpenDP (e.g., `IntDistance → IntDistance`), this is
+  trivially true: the cast is the identity or rounds up.
+
+  This property is needed for the row-by-row family of transformations,
+  where the input and output metrics are the same type and the stability map
+  goes through `InfCast` from `Metric.Distance M` to itself.
+-/
+class InfCastSelfNonDec (α : Type*) [Preorder α] [InfCast α α] : Prop where
+  self_nondec : ∀ {a ra : α}, InfCast.inf_cast a = some ra → a ≤ ra
+
+/--
   `InfMul` mirrors the Rust `InfMul` trait.
   Provides a **fallible** multiplication that rounds toward infinity.
 
@@ -63,6 +80,23 @@ class InfMul (α : Type*) [Preorder α] where
 -/
 class HasOne (α : Type*) where
   one : α
+
+/--
+  `OneInfMulNonDec` captures the universal property that multiplying by one
+  via `inf_mul` is non-decreasing: if `1.inf_mul(x) = some y`, then `x ≤ y`.
+
+  This holds for all standard numeric types in OpenDP because `inf_mul` rounds
+  toward positive infinity, and `1 * x = x` exactly (or rounds up).
+
+  Previously this was a repeated hypothesis (`h_one_mul` / `h_one_mul_nondec`)
+  on every soundness theorem. Promoting it to a typeclass axiom eliminates
+  that redundancy across `make_row_by_row_fallible`, `make_row_by_row`,
+  `make_clamp`, `make_is_equal`, `make_count`, and `make_vec`.
+-/
+class OneInfMulNonDec (α : Type*) [Preorder α] [InfMul α] [HasOne α] : Prop where
+  /-- `1.inf_mul(x) ≥ x` whenever the multiplication succeeds. -/
+  one_inf_mul_nondec : ∀ (x y : α),
+    InfMul.inf_mul (HasOne.one : α) x = some y → x ≤ y
 
 -- ============================================================================
 -- 2. new_stability_map_from_constant
@@ -108,6 +142,35 @@ theorem new_stability_map_from_constant_monotone
       have h_cast_mono := InfCast.monotone h_le h_ca h_cb
       exact InfMul.monotone_right h_cast_mono h_a h_b
 
+/--
+  `new_stability_map_from_constant(1)` is non-decreasing when used as a
+  self-cast (same type for input and output distances): if it succeeds with
+  `some d_out`, then `d_in ≤ d_out`.
+
+  This follows from:
+  1. `InfCastSelfNonDec`: `d_in ≤ inf_cast(d_in)` (self-cast rounds up)
+  2. `OneInfMulNonDec`: `inf_cast(d_in) ≤ 1.inf_mul(inf_cast(d_in))` (×1 rounds up)
+
+  This theorem replaces the `h_one_mul` hypothesis that was previously
+  required by `make_row_by_row_fallible_is_valid` and all downstream theorems
+  in the row-by-row family.
+-/
+theorem new_stability_map_from_constant_one_nondec
+    {α : Type*} [Preorder α]
+    [InfCast α α] [InfMul α] [HasOne α]
+    [InfCastSelfNonDec α] [OneInfMulNonDec α]
+    {d_in d_out : α}
+    (h : new_stability_map_from_constant (HasOne.one) d_in = some d_out)
+    : d_in ≤ d_out := by
+  unfold new_stability_map_from_constant at h
+  cases h_cast : InfCast.inf_cast (α := α) (β := α) d_in with
+  | none => simp [h_cast] at h
+  | some casted =>
+    rw [h_cast] at h
+    have h_le_casted := InfCastSelfNonDec.self_nondec h_cast
+    have h_le_dout := OneInfMulNonDec.one_inf_mul_nondec casted d_out h
+    exact le_trans h_le_casted h_le_dout
+
 -- ============================================================================
 -- 3. make_row_by_row_fallible
 -- ============================================================================
@@ -130,6 +193,8 @@ variable {DI DO M : Type*}
   [InfCast (Metric.Distance M) (Metric.Distance M)]
   [InfMul (Metric.Distance M)]
   [HasOne (Metric.Distance M)]
+  [InfCastSelfNonDec (Metric.Distance M)]
+  [OneInfMulNonDec (Metric.Distance M)]
 
 /--
   Construct the transformation corresponding to `make_row_by_row_fallible`.
@@ -166,9 +231,9 @@ def make_row_by_row_fallible
 
   the returned `Transformation` is valid.
 
-  The `h_one_mul` assumption captures that `1.inf_mul(inf_cast(d_in)) ≥ d_in`
-  whenever it succeeds. This is the property that the old formalization silently
-  assumed by using `id` as the stability map.
+  The non-decreasing property of the stability map (`1.inf_mul(inf_cast(d_in)) ≥ d_in`)
+  is now provided by the `InfCastSelfNonDec` and `OneInfMulNonDec` typeclass instances,
+  rather than as an explicit hypothesis.
 -/
 theorem make_row_by_row_fallible_is_valid
     (input_domain : DI)
@@ -178,10 +243,6 @@ theorem make_row_by_row_fallible_is_valid
     -- Precondition: row_function maps valid rows to output_row_domain (or errors)
     (h_row_fn : ∀ r, Domain.mem (DatasetDomain.elementDomain input_domain) r →
       ∃ r', row_function r = some r' ∧ Domain.mem output_row_domain r')
-    -- Precondition: 1.inf_mul(inf_cast(d_in)) ≥ d_in whenever it succeeds.
-    (h_one_mul : ∀ (d_in d_out : Metric.Distance M),
-      new_stability_map_from_constant (HasOne.one) d_in = some d_out →
-      d_in ≤ d_out)
     : (make_row_by_row_fallible input_domain input_metric output_row_domain row_function).IsValid :=
   { -- Part 1: appropriate output domain
     output_mem := by
@@ -196,7 +257,7 @@ theorem make_row_by_row_fallible_is_valid
       simp [make_row_by_row_fallible] at h_fu h_fv h_stab ⊢
       have h_non_exp := DatasetMetric.map_non_expansive input_metric row_function
         u v result_u result_v h_fu h_fv
-      have h_expand := h_one_mul d_in d_out h_stab
+      have h_expand := new_stability_map_from_constant_one_nondec h_stab
       exact le_trans (le_trans h_non_exp h_close) h_expand
   }
 

@@ -4,13 +4,6 @@
   Shared infrastructure used across transformation proofs:
   Domain, Metric, MetricOn, OpenDPMetricSpace, DatasetDomain,
   RowByRowDomain, DatasetMetric, Transformation, and Transformation.IsValid.
-
-  FAITHFULNESS NOTES (vs. prior version):
-  - Stability maps are now fallible (`→ Option Distance`), matching Rust's
-    `StabilityMap` which returns `Fallible<MO::Distance>`.
-  - `Transformation.IsValid` stability condition only applies when the
-    stability map succeeds, matching the Rust semantics where a failing
-    stability map is a conservative "can't certify" outcome.
 -/
 
 import Mathlib.Order.Basic
@@ -113,19 +106,17 @@ class DatasetMetric (M : Type*) (DI DO : Type*)
       MetricOn.dist m result_u result_v ≤ MetricOn.dist m u v
 
 -- ============================================================================
--- 2. Transformation (with fallible stability map)
+-- 2. Transformation
 -- ============================================================================
 
 /--
   A `Transformation` bundles:
   - input/output domains and metrics
   - a (fallible) function from input carrier to output carrier
-  - a **fallible** stability map from input distance to output distance
+  - a (fallible) stability map from input distance to output distance
 
-  The stability map is fallible (`→ Option Distance`), matching the Rust type:
-    `StabilityMap<MI, MO>(Arc<dyn Fn(&MI::Distance) -> Fallible<MO::Distance>>)`
-  A `none` return means the map cannot certify the given input distance,
-  which is a conservative (safe) outcome.
+  The stability map is fallible (`→ Option`), matching Rust's
+  `StabilityMap<MI, MO>(Arc<dyn Fn(&MI::Distance) -> Fallible<MO::Distance>>)`.
 -/
 structure Transformation (DI DO : Type*) (M : Type*)
     [Domain DI] [Domain DO]
@@ -141,13 +132,10 @@ structure Transformation (DI DO : Type*) (M : Type*)
   A `Transformation` is **valid** (sound) if:
   1. For all inputs in the input domain, the function returns a value in the
      output domain (appropriate output domain).
-  2. For all d_in: if `u, v` are d_in-close and the stability map succeeds
-     with `stability_map(d_in) = some d_out`, then `function(u), function(v)`
-     are d_out-close (stability guarantee).
-
-  Note: the stability condition only applies when `stability_map` returns
-  `some`. If it returns `none`, no guarantee is needed — this matches the
-  Rust semantics where a failing stability map means "cannot certify".
+  2. For all d_in: if `u, v` are d_in-close, the stability map succeeds with
+     `stability_map(d_in) = some d_out`, and the function succeeds on both
+     inputs, then `function(u), function(v)` are d_out-close
+     (stability guarantee).
 -/
 structure Transformation.IsValid {DI DO M : Type*}
     [Domain DI] [Domain DO]
@@ -159,7 +147,8 @@ structure Transformation.IsValid {DI DO M : Type*}
       ∃ result, t.function data = some result ∧ Domain.mem t.output_domain result
   /-- Part 2: stability (only when the stability map succeeds) -/
   stability :
-    ∀ (u v : Domain.Carrier DI) (d_in d_out : Metric.Distance M)
+    ∀ (u v : Domain.Carrier DI) (d_in : Metric.Distance M)
+      (d_out : Metric.Distance M)
       (result_u result_v : Domain.Carrier DO),
       Domain.mem t.input_domain u →
       Domain.mem t.input_domain v →
@@ -179,6 +168,10 @@ structure Transformation.IsValid {DI DO M : Type*}
   Let `f` be a deterministic, side-effect-free row function.
   For any datasets `u, v` and any `DatasetMetric` `M`:
     d_M(map f u, map f v) ≤ d_M(u, v)
+
+  Intuition: if u_i = v_i then f(u_i) = f(v_i) (determinism + no side effects),
+  so applying f cannot increase the number of differing rows. It can only
+  decrease it (e.g., if f is constant).
 
   In our formalization this is an axiom of `DatasetMetric`, since proving it
   generically would require committing to a concrete representation of datasets

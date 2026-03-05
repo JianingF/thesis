@@ -27,6 +27,8 @@ variable {DI DO M TIA : Type*}
   [InfCast (Metric.Distance M) (Metric.Distance M)]
   [InfMul (Metric.Distance M)]
   [HasOne (Metric.Distance M)]
+  [InfCastSelfNonDec (Metric.Distance M)]
+  [OneInfMulNonDec (Metric.Distance M)]
   [BEq TIA]
 
 /--
@@ -72,14 +74,10 @@ theorem make_is_equal_is_valid
     (from_bool : Bool → DatasetDomain.RowCarrier DO)
     (h_bool_mem : ∀ (b : Bool),
       Domain.mem output_row_domain (from_bool b))
-    (h_one_mul : ∀ (d_in d_out : Metric.Distance M),
-      new_stability_map_from_constant (HasOne.one) d_in = some d_out →
-      d_in ≤ d_out)
     : (make_is_equal input_domain input_metric output_row_domain value to_TIA from_bool).IsValid := by
   unfold make_is_equal
   apply make_row_by_row_is_valid
   · intro r _h_r_mem
     exact h_bool_mem _
-  · exact h_one_mul
 
 end MakeIsEqual

@@ -27,6 +27,15 @@ static const lean_ctor_object lp_OpenDPTranslation_instPreorderIntDistance___clo
 static const lean_object* lp_OpenDPTranslation_instPreorderIntDistance___closed__0 = (const lean_object*)&lp_OpenDPTranslation_instPreorderIntDistance___closed__0_value;
 LEAN_EXPORT const lean_object* lp_OpenDPTranslation_instPreorderIntDistance = (const lean_object*)&lp_OpenDPTranslation_instPreorderIntDistance___closed__0_value;
 LEAN_EXPORT const lean_object* lp_OpenDPTranslation_instMetricSymmetricDistance = (const lean_object*)&lp_OpenDPTranslation_instPreorderIntDistance___closed__0_value;
+lean_object* l_instBEqOfDecidableEq___redArg___lam__0___boxed(lean_object*, lean_object*, lean_object*);
+lean_object* lp_batteries_List_diff___redArg(lean_object*, lean_object*, lean_object*);
+lean_object* l_List_lengthTR___redArg(lean_object*);
+lean_object* lean_nat_add(lean_object*, lean_object*);
+lean_object* lean_nat_to_int(lean_object*);
+LEAN_EXPORT lean_object* lp_OpenDPTranslation_symmetric__distance__list___redArg(lean_object*, lean_object*, lean_object*);
+LEAN_EXPORT lean_object* lp_OpenDPTranslation_symmetric__distance__list(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
+LEAN_EXPORT lean_object* lp_OpenDPTranslation_instSymmetricDistanceOnListDecEq___redArg(lean_object*);
+LEAN_EXPORT lean_object* lp_OpenDPTranslation_instSymmetricDistanceOnListDecEq(lean_object*, lean_object*);
 LEAN_EXPORT lean_object* lp_OpenDPTranslation_instMetricOnSymmetricDistanceListOfSymmetricDistanceOnList___redArg(lean_object*);
 LEAN_EXPORT lean_object* lp_OpenDPTranslation_instMetricOnSymmetricDistanceListOfSymmetricDistanceOnList___redArg___boxed(lean_object*);
 LEAN_EXPORT lean_object* lp_OpenDPTranslation_instMetricOnSymmetricDistanceListOfSymmetricDistanceOnList(lean_object*, lean_object*);
@@ -48,8 +57,7 @@ LEAN_EXPORT lean_object* lp_OpenDPTranslation_instMetricOnAbsDistAtom___redArg__
 LEAN_EXPORT lean_object* lp_OpenDPTranslation_instMetricOnAbsDistAtom(lean_object*, lean_object*, lean_object*, lean_object*);
 LEAN_EXPORT lean_object* lp_OpenDPTranslation_instMetricOnAbsDistAtom___boxed(lean_object*, lean_object*, lean_object*, lean_object*);
 LEAN_EXPORT lean_object* lp_OpenDPTranslation_saturating__count___redArg(lean_object*, lean_object*);
-LEAN_EXPORT lean_object* lp_OpenDPTranslation_saturating__count(lean_object*, lean_object*, lean_object*);
-lean_object* l_List_lengthTR___redArg(lean_object*);
+LEAN_EXPORT lean_object* lp_OpenDPTranslation_saturating__count(lean_object*, lean_object*, lean_object*, lean_object*);
 LEAN_EXPORT lean_object* lp_OpenDPTranslation_make__count___redArg___lam__0(lean_object*, lean_object*);
 LEAN_EXPORT lean_object* lp_OpenDPTranslation_make__count___redArg___lam__0___boxed(lean_object*, lean_object*);
 LEAN_EXPORT lean_object* lp_OpenDPTranslation_make__count___redArg___lam__1(lean_object*, lean_object*, lean_object*, lean_object*);
@@ -136,6 +144,56 @@ _start:
 lean_object* x_1; 
 x_1 = lean_box(0);
 return x_1;
+}
+}
+LEAN_EXPORT lean_object* lp_OpenDPTranslation_symmetric__distance__list___redArg(lean_object* x_1, lean_object* x_2, lean_object* x_3) {
+_start:
+{
+lean_object* x_4; lean_object* x_5; lean_object* x_6; lean_object* x_7; lean_object* x_8; lean_object* x_9; lean_object* x_10; 
+x_4 = lean_alloc_closure((void*)(l_instBEqOfDecidableEq___redArg___lam__0___boxed), 3, 1);
+lean_closure_set(x_4, 0, x_1);
+lean_inc(x_3);
+lean_inc(x_2);
+lean_inc_ref(x_4);
+x_5 = lp_batteries_List_diff___redArg(x_4, x_2, x_3);
+x_6 = l_List_lengthTR___redArg(x_5);
+lean_dec(x_5);
+x_7 = lp_batteries_List_diff___redArg(x_4, x_3, x_2);
+x_8 = l_List_lengthTR___redArg(x_7);
+lean_dec(x_7);
+x_9 = lean_nat_add(x_6, x_8);
+lean_dec(x_8);
+lean_dec(x_6);
+x_10 = lean_nat_to_int(x_9);
+return x_10;
+}
+}
+LEAN_EXPORT lean_object* lp_OpenDPTranslation_symmetric__distance__list(lean_object* x_1, lean_object* x_2, lean_object* x_3, lean_object* x_4, lean_object* x_5) {
+_start:
+{
+lean_object* x_6; 
+x_6 = lp_OpenDPTranslation_symmetric__distance__list___redArg(x_2, x_4, x_5);
+return x_6;
+}
+}
+LEAN_EXPORT lean_object* lp_OpenDPTranslation_instSymmetricDistanceOnListDecEq___redArg(lean_object* x_1) {
+_start:
+{
+lean_object* x_2; 
+x_2 = lean_alloc_closure((void*)(lp_OpenDPTranslation_symmetric__distance__list), 5, 2);
+lean_closure_set(x_2, 0, lean_box(0));
+lean_closure_set(x_2, 1, x_1);
+return x_2;
+}
+}
+LEAN_EXPORT lean_object* lp_OpenDPTranslation_instSymmetricDistanceOnListDecEq(lean_object* x_1, lean_object* x_2) {
+_start:
+{
+lean_object* x_3; 
+x_3 = lean_alloc_closure((void*)(lp_OpenDPTranslation_symmetric__distance__list), 5, 2);
+lean_closure_set(x_3, 0, lean_box(0));
+lean_closure_set(x_3, 1, x_2);
+return x_3;
 }
 }
 LEAN_EXPORT lean_object* lp_OpenDPTranslation_instMetricOnSymmetricDistanceListOfSymmetricDistanceOnList___redArg(lean_object* x_1) {
@@ -325,12 +383,12 @@ return x_6;
 }
 }
 }
-LEAN_EXPORT lean_object* lp_OpenDPTranslation_saturating__count(lean_object* x_1, lean_object* x_2, lean_object* x_3) {
+LEAN_EXPORT lean_object* lp_OpenDPTranslation_saturating__count(lean_object* x_1, lean_object* x_2, lean_object* x_3, lean_object* x_4) {
 _start:
 {
-lean_object* x_4; 
-x_4 = lp_OpenDPTranslation_saturating__count___redArg(x_2, x_3);
-return x_4;
+lean_object* x_5; 
+x_5 = lp_OpenDPTranslation_saturating__count___redArg(x_3, x_4);
+return x_5;
 }
 }
 LEAN_EXPORT lean_object* lp_OpenDPTranslation_make__count___redArg___lam__0(lean_object* x_1, lean_object* x_2) {
