@@ -57,7 +57,8 @@ LEAN_EXPORT lean_object* lp_OpenDPTranslation_instMetricOnAbsDistAtom___redArg__
 LEAN_EXPORT lean_object* lp_OpenDPTranslation_instMetricOnAbsDistAtom(lean_object*, lean_object*, lean_object*, lean_object*);
 LEAN_EXPORT lean_object* lp_OpenDPTranslation_instMetricOnAbsDistAtom___boxed(lean_object*, lean_object*, lean_object*, lean_object*);
 LEAN_EXPORT lean_object* lp_OpenDPTranslation_saturating__count___redArg(lean_object*, lean_object*);
-LEAN_EXPORT lean_object* lp_OpenDPTranslation_saturating__count(lean_object*, lean_object*, lean_object*, lean_object*);
+LEAN_EXPORT lean_object* lp_OpenDPTranslation_saturating__count(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
+LEAN_EXPORT lean_object* lp_OpenDPTranslation_saturating__count___boxed(lean_object*, lean_object*, lean_object*, lean_object*, lean_object*);
 LEAN_EXPORT lean_object* lp_OpenDPTranslation_make__count___redArg___lam__0(lean_object*, lean_object*);
 LEAN_EXPORT lean_object* lp_OpenDPTranslation_make__count___redArg___lam__0___boxed(lean_object*, lean_object*);
 LEAN_EXPORT lean_object* lp_OpenDPTranslation_make__count___redArg___lam__1(lean_object*, lean_object*, lean_object*, lean_object*);
@@ -364,7 +365,7 @@ _start:
 lean_object* x_3; lean_object* x_4; lean_object* x_5; 
 x_3 = lean_ctor_get(x_1, 0);
 lean_inc(x_3);
-x_4 = lean_ctor_get(x_1, 1);
+x_4 = lean_ctor_get(x_1, 3);
 lean_inc_ref(x_4);
 lean_dec_ref(x_1);
 x_5 = lean_apply_1(x_4, x_2);
@@ -383,12 +384,21 @@ return x_6;
 }
 }
 }
-LEAN_EXPORT lean_object* lp_OpenDPTranslation_saturating__count(lean_object* x_1, lean_object* x_2, lean_object* x_3, lean_object* x_4) {
+LEAN_EXPORT lean_object* lp_OpenDPTranslation_saturating__count(lean_object* x_1, lean_object* x_2, lean_object* x_3, lean_object* x_4, lean_object* x_5) {
 _start:
 {
-lean_object* x_5; 
-x_5 = lp_OpenDPTranslation_saturating__count___redArg(x_3, x_4);
-return x_5;
+lean_object* x_6; 
+x_6 = lp_OpenDPTranslation_saturating__count___redArg(x_4, x_5);
+return x_6;
+}
+}
+LEAN_EXPORT lean_object* lp_OpenDPTranslation_saturating__count___boxed(lean_object* x_1, lean_object* x_2, lean_object* x_3, lean_object* x_4, lean_object* x_5) {
+_start:
+{
+lean_object* x_6; 
+x_6 = lp_OpenDPTranslation_saturating__count(x_1, x_2, x_3, x_4, x_5);
+lean_dec_ref(x_3);
+return x_6;
 }
 }
 LEAN_EXPORT lean_object* lp_OpenDPTranslation_make__count___redArg___lam__0(lean_object* x_1, lean_object* x_2) {

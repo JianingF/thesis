@@ -157,37 +157,3 @@ structure Transformation.IsValid {DI DO M : Type*}
       t.function u = some result_u →
       t.function v = some result_v →
       MetricOn.dist t.output_metric result_u result_v ≤ d_out
-
--- ============================================================================
--- 3. Lemma f-sim (standalone, for documentation)
--- ============================================================================
-
-/--
-  **Lemma f-sim** (from the proof document).
-
-  Let `f` be a deterministic, side-effect-free row function.
-  For any datasets `u, v` and any `DatasetMetric` `M`:
-    d_M(map f u, map f v) ≤ d_M(u, v)
-
-  Intuition: if u_i = v_i then f(u_i) = f(v_i) (determinism + no side effects),
-  so applying f cannot increase the number of differing rows. It can only
-  decrease it (e.g., if f is constant).
-
-  In our formalization this is an axiom of `DatasetMetric`, since proving it
-  generically would require committing to a concrete representation of datasets
-  (e.g., `List α`) and a concrete metric (e.g., symmetric distance).
--/
-theorem lemma_f_sim
-    {DI DO M : Type*}
-    [DatasetDomain DI] [DatasetDomain DO]
-    [Metric M] [MetricOn M (Domain.Carrier DI)] [MetricOn M (Domain.Carrier DO)]
-    [RowByRowDomain DI DO]
-    [inst : DatasetMetric M DI DO]
-    (m : M)
-    (f : DatasetDomain.RowCarrier DI → Option (DatasetDomain.RowCarrier DO))
-    (u v : Domain.Carrier DI)
-    (fu fv : Domain.Carrier DO)
-    (h_fu : RowByRowDomain.apply_rows u f = some fu)
-    (h_fv : RowByRowDomain.apply_rows v f = some fv)
-    : MetricOn.dist m fu fv ≤ MetricOn.dist m u v :=
-  inst.map_non_expansive m f u v fu fv h_fu h_fv
