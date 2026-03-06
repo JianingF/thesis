@@ -1,9 +1,5 @@
 /-
   OpenDP Core Abstractions for Lean 4.
-
-  Shared infrastructure used across transformation proofs:
-  Domain, Metric, MetricOn, OpenDPMetricSpace, DatasetDomain,
-  RowByRowDomain, DatasetMetric, Transformation, and Transformation.IsValid.
 -/
 
 import Mathlib.Order.Basic
@@ -84,7 +80,6 @@ class RowByRowDomain (DI DO : Type*)
   A `DatasetMetric` is a metric on datasets where row-wise application of a
   deterministic, side-effect-free function cannot increase distance.
 
-  This is the key property used in Lemma f-sim from the proof document.
   It holds for standard dataset metrics (SymmetricDistance, ChangeOneDistance, etc.)
   because they count differing rows, and a deterministic function preserves equality.
 -/
@@ -92,8 +87,7 @@ class DatasetMetric (M : Type*) (DI DO : Type*)
     [DatasetDomain DI] [DatasetDomain DO]
     [Metric M] [MetricOn M (Domain.Carrier DI)] [MetricOn M (Domain.Carrier DO)]
     [RowByRowDomain DI DO] where
-  /-- Lemma f-sim: applying a deterministic function row-wise cannot increase
-      the dataset metric distance.
+  /-- Lemma f-sim:
       If `f` is deterministic and side-effect-free, then
         d_M(map f u, map f v) ≤ d_M(u, v). -/
   map_non_expansive :

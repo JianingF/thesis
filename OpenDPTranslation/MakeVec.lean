@@ -10,9 +10,6 @@
 
   Like `make_count`, this uses heterogeneous metrics (AbsoluteDistance → LpDistance),
   so it uses the `HTransformation` structure.
-
-  CHANGES IN THIS VERSION:
-  - `h_one_mul_nondec` hypothesis eliminated in favor of `OneInfMulNonDec` typeclass.
 -/
 
 import OpenDPTranslation.OpenDPCore

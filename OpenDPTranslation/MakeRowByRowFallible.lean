@@ -4,15 +4,6 @@
   Proves soundness: the returned Transformation has a valid stability map,
   i.e., if inputs are d_in-close then outputs are d_out-close whenever
   stability_map(d_in) succeeds with some d_out.
-
-  FAITHFULNESS NOTES (vs. prior version):
-  - The stability map is now fallible, matching `new_stability_map_from_constant(1)`.
-    In Rust, this computes `TO.one().inf_mul(&TO.inf_cast(d_in)?)` which can
-    fail if either `inf_cast` or `inf_mul` fails.
-  - `InfCast` and `InfMul` are fallible, matching their Rust signatures.
-  - The `OneInfMulNonDec` and `InfCastSelfNonDec` typeclasses capture the
-    universal property that `new_stability_map_from_constant(1)` is non-decreasing,
-    eliminating the repeated `h_one_mul` hypothesis from all downstream theorems.
 -/
 
 import OpenDPTranslation.OpenDPCore
@@ -82,16 +73,8 @@ class HasOne (α : Type*) where
   one : α
 
 /--
-  `OneInfMulNonDec` captures the universal property that multiplying by one
+  `OneInfMulNonDec` captures the property that multiplying by one
   via `inf_mul` is non-decreasing: if `1.inf_mul(x) = some y`, then `x ≤ y`.
-
-  This holds for all standard numeric types in OpenDP because `inf_mul` rounds
-  toward positive infinity, and `1 * x = x` exactly (or rounds up).
-
-  Previously this was a repeated hypothesis (`h_one_mul` / `h_one_mul_nondec`)
-  on every soundness theorem. Promoting it to a typeclass axiom eliminates
-  that redundancy across `make_row_by_row_fallible`, `make_row_by_row`,
-  `make_clamp`, `make_is_equal`, `make_count`, and `make_vec`.
 -/
 class OneInfMulNonDec (α : Type*) [Preorder α] [InfMul α] [HasOne α] : Prop where
   /-- `1.inf_mul(x) ≥ x` whenever the multiplication succeeds. -/

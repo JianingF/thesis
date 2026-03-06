@@ -4,29 +4,6 @@
   `make_count` returns a Transformation that computes a count of the number
   of records in a vector. The count is exactly cast to a user-specified output
   type `TO`, saturating at `TO.MAX_CONSECUTIVE` if the cast overflows.
-
-  Unlike the row-by-row transformations, `make_count` does not delegate to
-  `make_row_by_row`. It uses different input and output metrics
-  (SymmetricDistance and AbsoluteDistance respectively), so we use a
-  generalized Transformation that supports heterogeneous metrics.
-
-  CHANGES IN THIS VERSION:
-  - `SymmetricDistanceOnList` now has a concrete definition of symmetric
-    distance using `List.diff`, and `len_diff_le_dist` is **proved** rather
-    than axiomatized. This corresponds to Lemma `len-sum-equiv` and the
-    triangle inequality from the LaTeX proof.
-  - `h_one_mul_nondec` hypothesis is eliminated in favor of the
-    `OneInfMulNonDec` typeclass.
-  - `NeverNull` assumption is removed. Instead, `ExactIntCast` now carries
-    proof obligations that `max_consecutive` and successful casts produce
-    non-null values, faithfully matching the LaTeX Part 1 argument.
-    The intermediate `saturating_count_not_null` theorem mirrors the
-    case analysis in the LaTeX proof.
-  - `SaturatingCountStable` (Lemma dsym-sens) is now **proved** rather than
-    axiomatized. `ExactIntCast` is enriched with the Rust proof definitions
-    (`from_nat`, `exact_int_cast_spec`, `max_consecutive_eq`), and the proof
-    factors through a pure ℕ clamping lemma (`nat_min_clamp_non_expansive`)
-    and two bridge typeclasses (`AbsDistFromNat`, `InfCastFromNat`).
 -/
 
 import OpenDPTranslation.OpenDPCore
@@ -276,7 +253,7 @@ theorem len_diff_le_symmetric_distance {α : Type*} [DecidableEq α]
 -- ----------------------------------------------------------------------------
 
 /--
-  The symmetric distance on `List α`, with `len_diff_le_dist` **proved**
+  The symmetric distance on `List α`, with `len_diff_le_dist` proved
   from the concrete definition rather than axiomatized.
 -/
 class SymmetricDistanceOnList (α : Type*) where
@@ -416,7 +393,7 @@ theorem saturating_count_eq_from_nat_min
 
   `|min(a, c) - min(b, c)| ≤ |a - b|`
 
-  This is the core mathematical fact behind Lemma dsym-sens.
+  This is used for Lemma dsym-sens.
 -/
 theorem nat_min_clamp_non_expansive (a b c : ℕ) :
     Int.natAbs ((Nat.min a c : ℤ) - (Nat.min b c : ℤ)) ≤
@@ -431,8 +408,7 @@ theorem nat_min_clamp_non_expansive (a b c : ℕ) :
   `from_nat |a - b|`, whenever `|a - b| ≤ max_consecutive_nat` (so that
   `from_nat` can represent the difference).
 
-  This captures the idea that `AbsoluteDistance` on `TO` behaves as
-  expected on the image of `from_nat`.
+  So `AbsoluteDistance` on `TO` behaves as expected on the image of `from_nat`.
 -/
 class AbsDistFromNat (TO : Type*) [CheckNull TO] [Preorder TO] [ExactIntCast TO]
     [AbsoluteDistanceOn TO] : Prop where
@@ -448,8 +424,7 @@ class AbsDistFromNat (TO : Type*) [CheckNull TO] [Preorder TO] [ExactIntCast TO]
   when `inf_cast` succeeds on a non-negative value, the result is at least
   `from_nat n`.
 
-  This captures the "rounds toward infinity" property of `InfCast`:
-  the cast result is at least as large as the exact integer value.
+  This captures the "rounds toward infinity" property of `InfCast`.
 -/
 class InfCastFromNat (TO : Type*) [CheckNull TO] [Preorder TO] [ExactIntCast TO]
     [InfCast IntDistance TO] : Prop where
@@ -458,7 +433,7 @@ class InfCastFromNat (TO : Type*) [CheckNull TO] [Preorder TO] [ExactIntCast TO]
       ExactIntCast.from_nat (TO := TO) n ≤ v
 
 /--
-  **Lemma dsym-sens** (proved).
+  **Lemma dsym-sens**.
 
   `|function(x) - function(x')| ≤ cast_result`
 
